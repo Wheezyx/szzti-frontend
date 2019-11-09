@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   //TODO FIND A WAY TO REPLACE HARDCORED STRING WITH ENV VALUE
-  apiUrl: 'http://192.168.0.1/api'
+  apiUrl: 'http://backend/api'
 };
