@@ -1,9 +1,12 @@
-import { AuthGuard } from "./helpers/auth_guard";
+import { PlaceListComponent } from './place/place-list/place-list.component';
+import { ItemListComponent } from "./item/item-list/item-list.component";
 import { LoginComponent } from "./login/login.component";
 import { SecuredComponent } from "./secured/secured.component";
 import { HomeComponent } from "./home/home.component";
 import { Routes, RouterModule } from "@angular/router";
-import { Role } from "./models/role";
+import { Role } from "./_models/role";
+import { ItemAddComponent } from './item/item-add/item-add.component';
+import { AuthGuard } from './_helpers/auth_guard';
 
 const routes: Routes = [
   {
@@ -18,8 +21,20 @@ const routes: Routes = [
     data: { roles: [Role.Admin] }
   },
   {
+    path: "items",
+    component: ItemListComponent
+  },
+  {
     path: "login",
     component: LoginComponent
+  },
+  {
+    path: "items/add",
+    component: ItemAddComponent
+  },
+  {
+    path: "places",
+    component: PlaceListComponent
   },
   //TODO Change to 404 error page
   { path: "**", redirectTo: "" }

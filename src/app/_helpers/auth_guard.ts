@@ -5,8 +5,8 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot
 } from "@angular/router";
-import { AuthenticationService } from '@app/services/authentication.service';
-import { Role } from '@app/models/role';
+import { AuthenticationService } from '@app/_services/authentication.service';
+import { Role } from '@app/_models/role';
 
 
 @Injectable({ providedIn: "root" })

@@ -1,13 +1,32 @@
-import { NgModule } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
+import { NgModule } from "@angular/core";
+import { MatTableModule } from "@angular/material/table";
+import { A11yModule } from "@angular/cdk/a11y";
+import { CdkTableModule } from "@angular/cdk/table";
+import { MatNativeDateModule, MatRippleModule, MAT_DATE_LOCALE } from "@angular/material/core";
+import {
+  MatPaginatorModule,
+  MatPaginatorIntl
+} from "@angular/material/paginator";
+import { MatSortModule } from "@angular/material/sort";
+import { getPolishPaginatorIntl } from "./_utils/polish-paginator-intl";
+import { MatProgressSpinnerModule, MatInputModule, MatCheckboxModule, MatSelectModule, MatDatepickerModule } from '@angular/material';
 
 @NgModule({
-  imports: [
-    MatTableModule
-  ],
+  imports: [MatTableModule],
   exports: [
-    MatTableModule
-  ]
+    A11yModule,
+    CdkTableModule,
+    MatPaginatorModule,
+    MatRippleModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSortModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [{ provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl() }, {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}]
 })
-
 export class AngularMaterialModule {}

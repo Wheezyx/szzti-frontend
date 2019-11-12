@@ -1,0 +1,48 @@
+
+<mat-input-container>
+  <input matInput placeholder="Szukaj po kodzie" #codeFilter>
+</mat-input-container>
+<div class="item-container mat-elevation-z8">
+  <div class="loading-shade" *ngIf="loading">
+    <mat-spinner *ngIf="loading"></mat-spinner>
+  </div>
+
+  <div class="item-table-container">
+    <table
+      mat-table
+      [dataSource]="data"
+      class="item-table"
+      matSort
+      matSortActive="created"
+      matSortDisableClear
+      matSortDirection="desc"
+    >
+      <ng-container matColumnDef="fullItemName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+          Nazwa przedmiotu
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.fullItemName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="inventoryCode">
+        <th mat-header-cell *matHeaderCellDef>Kod inwentarzowy</th>
+        <td mat-cell *matCellDef="let item">{{ item.inventoryCode }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="itemType">
+        <th mat-header-cell *matHeaderCellDef>Typ</th>
+        <td mat-cell *matCellDef="let item">{{ itemTypeEnum[item.itemType] }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="insideType">
+        <th mat-header-cell *matHeaderCellDef>Typ środka</th>
+        <td mat-cell *matCellDef="let item">{{ item.insideType }}</td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let item; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <mat-paginator [length]="resultsLength" [pageSize]="[10]" [pageSizeOptions]="[10,20,100]"></mat-paginator>
+</div>

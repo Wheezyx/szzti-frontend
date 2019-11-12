@@ -7,11 +7,12 @@ import {
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError, retry } from "rxjs/operators";
-import { AuthenticationService } from "@app/services/authentication.service";
+import { AuthenticationService } from "@app/_services/authentication.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService, private toastr: ToastrService) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -19,15 +20,19 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError(error => {
+        //TODO HANDLE MORE ERRORS (E.G. 500 IF NEEDED)
         if (error.status === 401 || error.status === 403) {
           this.authenticationService.logout();
           if (error.status === 403) {
             location.reload(true);
           }
         }
-
-        const errorText = error.error.message || error.statusText;
+        if (error.status === 400) {
+          this.toastr.error(error.error.message, "Błąd");
+        } 
+          const errorText = error.error.message || error.statusText;
         return throwError(errorText);
+        
       })
     );
   }

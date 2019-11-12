@@ -1,0 +1,78 @@
+<div class="col-md-6 offset-md-3 mt-5">
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <input
+            type="text"
+            formControlName="fullItemName"
+            matInput
+            placeholder="Nazwa przedmiotu"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Data dostarczenia"
+            (dateChange)="date($event)"
+          />
+          <mat-datepicker-toggle
+            matSuffic
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker startView="year"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="text"
+            formControlName="inventoryCode"
+            matInput
+            placeholder="Kod inwentarzowy"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Typ środka</mat-label>
+          <mat-select formControlName="insideType" required>
+            <mat-option
+              *ngFor="let insideType of insideTypeEnum | enumToArray"
+              [value]="insideType"
+            >
+              {{ insideType }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Typ przedmiotu</mat-label>
+          <mat-select formControlName="itemType" required>
+            <mat-option
+              *ngFor="let itemType of keys(itemTypeEnum)"
+              [value]="itemType"
+            >
+              {{ itemTypeEnum[itemType] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="text"
+            formControlName="placeOfPosting"
+            matInput
+            placeholder="Miejsce zaksięgowania"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput formControlName="description" placeholder="Opis"></textarea>
+        </mat-form-field>
+        <mat-checkbox formControlName="equipment">Inwentarz</mat-checkbox>
+        <button class="btn btn-primary">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Zapisz
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

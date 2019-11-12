@@ -1,13 +1,17 @@
 <!-- nav -->
 <nav class="navbar navbar-expand navbar-dark bg-dark">
   <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/">Home</a>
-      <a class="nav-item nav-link" routerLink="/secured" *ngIf="secured">Secured</a>
-      <a class="nav-item nav-link" (click)="logout()">Logout</a>
-      
+    <a class="nav-item nav-link" routerLink="/">Home</a>
+    <a class="nav-item nav-link" routerLink="/secured" *ngIf="secured"
+      >Secured</a
+    >
+    <a class="nav-item nav-link" routerLink="/items">Lista przedmiotów</a>
+    <a class="nav-item nav-link" routerLink="/items/add">Dodaj przedmiot</a>
+    <a class="nav-item nav-link" routerLink="/places">Lista miejsc</a>
+    <a class="nav-item nav-link" (click)="logout()">Logout</a>
   </div>
 </nav>
 SYSTEM ZARZĄDZANIA ZASOBAMI TELEINFORMATYCZNYMI
-<div class="container">
+<main>
   <router-outlet></router-outlet>
-</div>
+</main>
