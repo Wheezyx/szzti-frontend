@@ -17,6 +17,7 @@ import { EnumToArrayPipe } from "./_pipes/enum-to-array.pipe";
 import { PlaceListComponent } from './place/place-list/place-list.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
+import { PlaceViewComponent } from './place/place-view/place-view.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
     ItemListComponent,
     ItemAddComponent,
     EnumToArrayPipe,
-    PlaceListComponent
+    PlaceListComponent,
+    PlaceViewComponent
   ],
   imports: [
     BrowserModule,

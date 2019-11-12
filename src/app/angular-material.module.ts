@@ -9,7 +9,7 @@ import {
 } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { getPolishPaginatorIntl } from "./_utils/polish-paginator-intl";
-import { MatProgressSpinnerModule, MatInputModule, MatCheckboxModule, MatSelectModule, MatDatepickerModule } from '@angular/material';
+import { MatProgressSpinnerModule, MatInputModule, MatCheckboxModule, MatSelectModule, MatDatepickerModule, MatButtonModule, MatIconModule, MatCardModule } from '@angular/material';
 
 @NgModule({
   imports: [MatTableModule],
@@ -25,7 +25,10 @@ import { MatProgressSpinnerModule, MatInputModule, MatCheckboxModule, MatSelectM
     MatProgressSpinnerModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
   ],
   providers: [{ provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl() }, {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}]
 })

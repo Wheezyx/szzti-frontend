@@ -1,1 +1,45 @@
-<p>place-list works!</p>
+
+<mat-input-container>
+    <input matInput placeholder="Szukaj po nazwie" #nameFilter>
+  </mat-input-container>
+  <div class="place-container mat-elevation-z8">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner *ngIf="loading"></mat-spinner>
+    </div>
+  
+    <div class="place-table-container">
+      <table
+        mat-table
+        [dataSource]="data"
+        class="place-table"
+        matSort
+        matSortActive="created"
+        matSortDisableClear
+        matSortDirection="desc"
+      >
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+            Nazwa pomieszczenia
+          </th>
+          <td mat-cell *matCellDef="let place">{{ place.name }}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>
+      Akcje
+    </th>
+    <mat-cell *matCellDef="let place;">
+      <!-- View -->
+      <button mat-icon-button (click)="handleView(place?.id)">
+        <mat-icon aria-label="View">visibility</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let place; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <mat-paginator [length]="resultsLength" [pageSize]="[10]" [pageSizeOptions]="[10,20,100]"></mat-paginator>
+  </div>
+  

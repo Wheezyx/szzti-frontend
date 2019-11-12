@@ -1,3 +1,4 @@
+import { PlaceViewComponent } from './place/place-view/place-view.component';
 import { PlaceListComponent } from './place/place-list/place-list.component';
 import { ItemListComponent } from "./item/item-list/item-list.component";
 import { LoginComponent } from "./login/login.component";
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: "places",
     component: PlaceListComponent
+  },
+  {
+    path: "places/view/:id",
+    component:  PlaceViewComponent
   },
   //TODO Change to 404 error page
   { path: "**", redirectTo: "" }
