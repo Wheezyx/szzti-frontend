@@ -3,7 +3,8 @@
       <mat-card-title>Nazwa: <strong>{{ place?.name }}</strong></mat-card-title>
       <mat-card-subtitle>id: <strong>{{ place?.id }}</strong></mat-card-subtitle>
     </mat-card-header>
+    <p>Lista przedmiotów przypisanych do tej sali:</p>
     <mat-card-content>
-        <!-- PLACE FOR LIST WITH RENTLAS -->
+      <app-rental-list-child [placeId]="place.id"></app-rental-list-child>
     </mat-card-content>
   </mat-card>

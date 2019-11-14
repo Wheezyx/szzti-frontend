@@ -15,6 +15,7 @@ import {
 import { ItemService } from "@app/_services/item.service";
 import { Pageable } from "@app/_models/pageable";
 import { ItemType } from '@app/_models/item-type';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-item-list",
@@ -22,7 +23,7 @@ import { ItemType } from '@app/_models/item-type';
   templateUrl: "item-list.component.html"
 })
 export class ItemListComponent implements AfterViewInit {
-  displayedColumns: string[] = ["fullItemName", "inventoryCode", "itemType", "insideType"];
+  displayedColumns: string[] = ["fullItemName", "inventoryCode", "itemType", "insideType", "actions"];
   data: Item[] = [];
   params: Map<String, String> = new Map();
   itemTypeEnum = ItemType;
@@ -33,7 +34,7 @@ export class ItemListComponent implements AfterViewInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild("codeFilter", { static: false }) codeFilter: ElementRef;
 
-  constructor(private itemService: ItemService) {}
+  constructor(private itemService: ItemService, private router: Router) {}
 
   ngAfterViewInit() {
     fromEvent(this.codeFilter.nativeElement, "keyup")
@@ -75,5 +76,9 @@ export class ItemListComponent implements AfterViewInit {
       .subscribe(data => (this.data = data));
   }
 
-  private loadItems() {}
+
+  handleView(id: String) {
+      console.log(id);
+      this.router.navigate(["items/view/", id]);
+  }
 }

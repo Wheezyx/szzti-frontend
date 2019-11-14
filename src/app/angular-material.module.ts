@@ -28,7 +28,7 @@ import { MatProgressSpinnerModule, MatInputModule, MatCheckboxModule, MatSelectM
     MatNativeDateModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
   ],
   providers: [{ provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl() }, {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}]
 })

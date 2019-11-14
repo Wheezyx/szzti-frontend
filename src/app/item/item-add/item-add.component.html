@@ -35,7 +35,7 @@
           <mat-label>Typ środka</mat-label>
           <mat-select formControlName="insideType" required>
             <mat-option
-              *ngFor="let insideType of insideTypeEnum | enumToArray"
+              *ngFor="let insideType of keys(insideTypeEnum)"
               [value]="insideType"
             >
               {{ insideType }}

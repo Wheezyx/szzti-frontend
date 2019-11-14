@@ -39,6 +39,16 @@
         <td mat-cell *matCellDef="let item">{{ item.insideType }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            Akcje
+          </th>
+          <mat-cell *matCellDef="let item;">
+            <button mat-icon-button (click)="handleView(item?.id)">
+              <mat-icon aria-label="View">visibility</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let item; columns: displayedColumns"></tr>

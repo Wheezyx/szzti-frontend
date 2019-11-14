@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title
+      >Kod: <strong>{{ item?.inventoryCode }}</strong></mat-card-title
+    >
+    <mat-card-subtitle
+      >id: <strong>{{ item?.id }}</strong></mat-card-subtitle
+    >
+  </mat-card-header>
+  <mat-card-content>
+    Pełna nazwa <strong>{{ item?.fullItemName }}</strong> Nazwa zwyczajowa
+    <strong>{{ item?.genericName }}</strong> Typ środka
+    <strong>{{ item?.insideType }}</strong> Typ przedmiotu
+    <strong>{{ item?.itemType }}</strong> Data zaksięgowania
+    <strong>{{ item?.dateOfDelivery }}</strong> Miejsce zaksięgowania
+    <strong>{{ item?.placeOfPosting }}</strong>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-content>
+    <div *ngIf="!item?.rented">Przedmiot nie jest wypożyczony</div>
+    <div *ngIf="item?.rented">
+      <div *ngIf="rentalLoading">Czekaj, wczytuję szczegóły wypożyczenia...</div>
+      <div *ngIf="!rentalLoading">
+          Szczegóły wypożyczenia:
+        <div *ngIf="rental.renter">
+          Kod osoby wypożyczającej:
+          {{ rental.renter != null ? rental.renter.code : "Brak" }}
+          <button mat-icon-button (click)="handleViewRenter(rental.renter?.id)">
+            <mat-icon aria-label="View">visibility</mat-icon>
+          </button>
+        </div>
+        <div *ngIf="rental.place">
+          Sala: {{ rental.place != null ? rental.place.name : "Brak" }}
+          <button mat-icon-button (click)="handleViewPlace(rental.place?.id)">
+            <mat-icon aria-label="View">visibility</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

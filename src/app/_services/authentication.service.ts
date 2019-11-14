@@ -36,7 +36,12 @@ export class AuthenticationService {
 
     logout() {
         this.toastr.info("Zostałeś pomyślnie wylogowany");
+        this.clearUserFromStorage();
+    }
+
+    clearUserFromStorage() {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
+
 }

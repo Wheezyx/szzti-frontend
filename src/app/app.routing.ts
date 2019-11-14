@@ -1,3 +1,7 @@
+import { ItemViewComponent } from './item/item-view/item-view.component';
+import { RenterViewComponent } from './renter/renter-view/renter-view.component';
+import { RenterListComponent } from './renter/renter-list/renter-list.component';
+import { RentalListChildComponent } from './rental/rental-list-child/rental-list-child.component';
 import { PlaceViewComponent } from './place/place-view/place-view.component';
 import { PlaceListComponent } from './place/place-list/place-list.component';
 import { ItemListComponent } from "./item/item-list/item-list.component";
@@ -40,6 +44,18 @@ const routes: Routes = [
   {
     path: "places/view/:id",
     component:  PlaceViewComponent
+  },
+  {
+    path: "renters",
+    component: RenterListComponent
+  },
+  {
+    path: "renters/view/:id",
+    component:  RenterViewComponent
+  },
+  {
+    path: "items/view/:id",
+    component:  ItemViewComponent
   },
   //TODO Change to 404 error page
   { path: "**", redirectTo: "" }

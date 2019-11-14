@@ -11,4 +11,5 @@ export class Item {
   inventoryCode: String;
   itemType: ItemType;
   placeOfPosting: String;
+  rented: boolean;
 }

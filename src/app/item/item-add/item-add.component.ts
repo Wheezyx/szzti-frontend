@@ -62,7 +62,7 @@ export class ItemAddComponent implements OnInit {
     this.loading = false;
   }
 
-  private date(event) {
+  date(event) {
     const covertedDate = new Date(event.target.value).toISOString();
     this.addItemForm.get('dateOfDelivery').setValue(covertedDate, {onlyself: true});
   }

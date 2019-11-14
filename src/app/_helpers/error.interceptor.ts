@@ -21,8 +21,12 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(error => {
         //TODO HANDLE MORE ERRORS (E.G. 500 IF NEEDED)
+        if (error.status === 0) {
+          this.toastr.warning('Brak połączenia z serwerem backendowym.');
+        }
+
         if (error.status === 401 || error.status === 403) {
-          this.authenticationService.logout();
+          this.authenticationService.clearUserFromStorage();
           if (error.status === 403) {
             location.reload(true);
           }

@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Kod: <strong>{{ renter?.code }}</strong></mat-card-title>
+      <mat-card-subtitle>Id: <strong>{{ renter?.id }}</strong></mat-card-subtitle>
+      <p>Imię: <strong>{{renter?.name }}</strong></p>
+      <p>Nazwisko: <strong>{{renter?.surname }}</strong></p>
+    </mat-card-header>
+    <p>Lista przedmiotów przypisanych do tej osoby:</p>
+    <mat-card-content>
+      <app-rental-list-child [renterId]="renter.id"></app-rental-list-child>
+    </mat-card-content>
+  </mat-card>

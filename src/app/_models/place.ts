@@ -1,4 +1,4 @@
 export class Place {
   id: String;
-  namme: String;
+  name: String;
 }

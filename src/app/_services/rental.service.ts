@@ -1,0 +1,40 @@
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '@environments/environment';
+import { Pageable } from '@app/_models/pageable';
+import { Page } from '@app/_models/page';
+import { Rental } from '@app/_models/rental';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RentalService {
+
+  private rentalsUrl = environment.apiUrl + "/rentals";
+
+  constructor(private http: HttpClient) { }
+
+
+  public getPage(pageable: Pageable, filterParams: Map<String, String>): Observable<Page<Rental>> {
+    const params = this.prepareParams(filterParams);
+    const requestUrl =
+      this.rentalsUrl +
+      "?page=" +
+      pageable.pageNumber +
+      "&size=" +
+      pageable.pageSize;
+    return this.http.get<Page<Rental>>(requestUrl, {params: params});
+  }
+
+  private prepareParams(filterParams: Map<String, String>): HttpParams {
+    let params = new HttpParams();
+    filterParams.forEach((value, key) => {
+      if (key && value) {
+        params = params.set(key.toString(), value.toString());
+      }
+    });
+    return params;
+  }
+  
+}

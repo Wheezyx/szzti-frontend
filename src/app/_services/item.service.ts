@@ -1,4 +1,4 @@
-import { map, first } from 'rxjs/operators';
+import { map, first } from "rxjs/operators";
 import { environment } from "@environments/environment";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
@@ -15,7 +15,10 @@ export class ItemService {
 
   constructor(private http: HttpClient) {}
 
-  public getPage(pageable: Pageable, filterParams: Map<String, String>): Observable<Page<Item>> {
+  public getPage(
+    pageable: Pageable,
+    filterParams: Map<String, String>
+  ): Observable<Page<Item>> {
     const params = this.prepareParams(filterParams);
     const requestUrl =
       this.itemsUrl +
@@ -23,11 +26,15 @@ export class ItemService {
       pageable.pageNumber +
       "&size=" +
       pageable.pageSize;
-    return this.http.get<Page<Item>>(requestUrl, {params: params});
+    return this.http.get<Page<Item>>(requestUrl, { params: params });
   }
 
   public save(item: Item) {
     return this.http.post<Item>(this.itemsUrl, item).pipe(first());
+  }
+
+  getById(id: String): Observable<Item> {
+    return this.http.get<Item>(this.itemsUrl + "/" + id);
   }
 
   private prepareParams(filterParams: Map<String, String>): HttpParams {

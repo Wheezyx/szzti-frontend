@@ -9,7 +9,8 @@ import { Place } from '@app/_models/place';
   styleUrls: ['./place-view.component.css']
 })
 export class PlaceViewComponent implements OnInit, AfterViewInit {
-  private place:Place;
+  
+  place:Place;
   private loading = true;
   constructor(private placeService: PlaceService, private acivatedRoute: ActivatedRoute) { }
 

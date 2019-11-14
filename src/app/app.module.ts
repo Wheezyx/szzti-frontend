@@ -18,6 +18,10 @@ import { PlaceListComponent } from './place/place-list/place-list.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { PlaceViewComponent } from './place/place-view/place-view.component';
+import { RentalListChildComponent } from './rental/rental-list-child/rental-list-child.component';
+import { RenterListComponent } from './renter/renter-list/renter-list.component';
+import { RenterViewComponent } from './renter/renter-view/renter-view.component';
+import { ItemViewComponent } from './item/item-view/item-view.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { PlaceViewComponent } from './place/place-view/place-view.component';
     ItemAddComponent,
     EnumToArrayPipe,
     PlaceListComponent,
-    PlaceViewComponent
+    PlaceViewComponent,
+    RentalListChildComponent,
+    RenterListComponent,
+    RenterViewComponent,
+    ItemViewComponent,
   ],
   imports: [
     BrowserModule,
