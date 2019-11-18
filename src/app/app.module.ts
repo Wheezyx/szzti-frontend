@@ -22,6 +22,7 @@ import { RentalListChildComponent } from './rental/rental-list-child/rental-list
 import { RenterListComponent } from './renter/renter-list/renter-list.component';
 import { RenterViewComponent } from './renter/renter-view/renter-view.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
+import { RenterAddComponent } from './renter/renter-add/renter-add.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ItemViewComponent } from './item/item-view/item-view.component';
     RenterListComponent,
     RenterViewComponent,
     ItemViewComponent,
+    RenterAddComponent,
   ],
   imports: [
     BrowserModule,

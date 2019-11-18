@@ -1,21 +1,24 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { Renter } from '@app/_models/renter';
-import { Page } from '@app/_models/page';
-import { environment } from '@environments/environment';
-import { Pageable } from '@app/_models/pageable';
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { Injectable } from "@angular/core";
+import { Renter } from "@app/_models/renter";
+import { Page } from "@app/_models/page";
+import { environment } from "@environments/environment";
+import { Pageable } from "@app/_models/pageable";
+import { first } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class RenterService {
+  private rentersUrl = environment.apiUrl + "/renters";
 
-  private rentersUrl = environment.apiUrl + '/renters';
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getPage(pageable: Pageable, filterParams: Map<String, String>): Observable<Page<Renter>> {
+  getPage(
+    pageable: Pageable,
+    filterParams: Map<String, String>
+  ): Observable<Page<Renter>> {
     const params = this.prepareParams(filterParams);
     const requestUrl =
       this.rentersUrl +
@@ -23,7 +26,15 @@ export class RenterService {
       pageable.pageNumber +
       "&size=" +
       pageable.pageSize;
-    return this.http.get<Page<Renter>>(requestUrl, {params: params});
+    return this.http.get<Page<Renter>>(requestUrl, { params: params });
+  }
+
+  getById(id: String): Observable<Renter> {
+    return this.http.get<Renter>(this.rentersUrl + "/" + id);
+  }
+
+  public save(renter: Renter): Observable<Renter> {
+    return this.http.post<Renter>(this.rentersUrl, renter).pipe(first());
   }
 
   private prepareParams(filterParams: Map<String, String>): HttpParams {
@@ -35,8 +46,5 @@ export class RenterService {
       }
     });
     return params;
-  }
-  getById(id: String): Observable<Renter> {
-    return this.http.get<Renter>(this.rentersUrl + "/" + id);
   }
 }

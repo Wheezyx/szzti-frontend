@@ -26,7 +26,6 @@ export class RentalListChildComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<Rental>();
   displayedColumns = ["select", "itemName", "placeName", "renterCode"];
   selection = new SelectionModel<Rental>(true, []);
-  selectionHistory = new Array<Rental>();
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 

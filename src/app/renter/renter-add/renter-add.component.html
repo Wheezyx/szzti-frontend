@@ -1,0 +1,40 @@
+<div class="col-md-6 offset-md-3 mt-5">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="name"
+              matInput
+              placeholder="Imię"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="surname"
+              matInput
+              placeholder="Nazwisko"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="code"
+              matInput
+              placeholder="Kod"
+            />
+          </mat-form-field>
+          <button class="btn btn-primary">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Zapisz
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

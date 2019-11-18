@@ -14,8 +14,9 @@ import {
 } from "rxjs/operators";
 import { ItemService } from "@app/_services/item.service";
 import { Pageable } from "@app/_models/pageable";
-import { ItemType } from '@app/_models/item-type';
-import { Router } from '@angular/router';
+import { ItemType } from "@app/_models/item-type";
+import { Router } from "@angular/router";
+import { SelectionModel } from "@angular/cdk/collections";
 
 @Component({
   selector: "app-item-list",
@@ -23,18 +24,35 @@ import { Router } from '@angular/router';
   templateUrl: "item-list.component.html"
 })
 export class ItemListComponent implements AfterViewInit {
-  displayedColumns: string[] = ["fullItemName", "inventoryCode", "itemType", "insideType", "actions"];
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild("codeFilter", { static: false }) codeFilter: ElementRef;
+
+  displayedColumns: string[] = [
+    "select",
+    "fullItemName",
+    "inventoryCode",
+    "itemType",
+    "insideType",
+    "actions"
+  ];
   data: Item[] = [];
   params: Map<String, String> = new Map();
   itemTypeEnum = ItemType;
   resultsLength = 0;
   loading = true;
+  selection = new SelectionModel<Item>(true, []);
+  rentedFilters = [
+    {value: 'skipRented', viewValue: 'Pokaż tylko niewypożyczone'},
+    {value: 'skipNotRented', viewValue: 'Pokaż tylko wypożyczone'},
+    {value: '', viewValue: 'Pokaż wszystkie'}
+  ];
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild("codeFilter", { static: false }) codeFilter: ElementRef;
 
-  constructor(private itemService: ItemService, private router: Router) {}
+  constructor(private itemService: ItemService, private router: Router) {
+    this.selection.isSelected = this.isChecked.bind(this);
+    this.selection.toggle = this.toggle.bind(this);
+  }
 
   ngAfterViewInit() {
     fromEvent(this.codeFilter.nativeElement, "keyup")
@@ -76,9 +94,39 @@ export class ItemListComponent implements AfterViewInit {
       .subscribe(data => (this.data = data));
   }
 
-
   handleView(id: String) {
-      console.log(id);
-      this.router.navigate(["items/view/", id]);
+    console.log(id);
+    this.router.navigate(["items/view/", id]);
+  }
+
+  checkboxLabel(item?: Item): string {
+    return `${
+      this.selection.isSelected(item) ? "deselect" : "select"
+    } row ${item}`;
+  }
+
+  isChecked(row: any): boolean {
+    const found = this.selection.selected.find(el => el.id === row.id);
+    return found != null;
+  }
+
+  toggle(row: any) {
+    console.log("PRZED:" + this.selection.selected.length);
+    const found = this.selection.selected.find(el => el.id === row.id);
+    if (!found) {
+      this.selection.select(row);
+    } else {
+      this.selection.deselect(found);
+    }
+
+    console.log("PO:" + this.selection.selected.length);
+  }
+
+  changeRentedFilter(value: string) {
+    this.rentedFilters.forEach(element => {
+        this.params.delete(element.value);
+    });
+    this.params.set(value, "true");
+    this.paginator.page.emit();
   }
 }

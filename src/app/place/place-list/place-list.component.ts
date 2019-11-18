@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class PlaceListComponent implements AfterViewInit {
   displayedColumns: string[] = ["name", "actions"];
   data: Place[] = [];
+  searchParams = new Map<String, String>();
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -31,7 +32,8 @@ export class PlaceListComponent implements AfterViewInit {
         debounceTime(800),
         distinctUntilChanged(),
         tap(() => {
-          throw new Error("Method not implemented." + this.nameFilter.nativeElement.value);
+          this.searchParams.set("name", this.nameFilter.nativeElement.value);
+          this.paginator.page.emit();
         })
       )
       .subscribe();
@@ -47,7 +49,7 @@ export class PlaceListComponent implements AfterViewInit {
           const page = new Pageable();
           page.pageNumber = this.paginator.pageIndex;
           page.pageSize = this.paginator.pageSize;
-          return this.placeService.getPage(page);
+          return this.placeService.getPage(page, this.searchParams);
         }),
         map(page => {
           this.loading = false;

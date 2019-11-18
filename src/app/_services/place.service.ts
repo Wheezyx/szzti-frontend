@@ -14,17 +14,28 @@ export class PlaceService {
 
   constructor(private http: HttpClient) {}
 
-  getPage(pageable: Pageable): Observable<Page<Place>> {
+  getPage(pageable: Pageable,  filterParams: Map<String, String>): Observable<Page<Place>> {
+    const params = this.prepareParams(filterParams);
     const requestUrl =
       this.placesUrl +
       "?page=" +
       pageable.pageNumber +
       "&size=" +
       pageable.pageSize;
-    return this.http.get<Page<Place>>(requestUrl);
+    return this.http.get<Page<Place>>(requestUrl, {params: params});
   }
 
   getById(id: String): Observable<Place> {
     return this.http.get<Place>(this.placesUrl + "/" + id);
   }
+
+private prepareParams(filterParams: Map<String, String>): HttpParams {
+  let params = new HttpParams();
+  filterParams.forEach((value, key) => {
+    if (key && value) {
+      params = params.set(key.toString(), value.toString());
+    }
+  });
+  return params;
+}
 }
