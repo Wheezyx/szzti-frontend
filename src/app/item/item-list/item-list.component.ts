@@ -17,6 +17,9 @@ import { Pageable } from "@app/_models/pageable";
 import { ItemType } from "@app/_models/item-type";
 import { Router } from "@angular/router";
 import { SelectionModel } from "@angular/cdk/collections";
+import { MatDialog } from "@angular/material";
+import { ToastrService } from "ngx-toastr";
+import { ConfirmationDialogComponent } from "@app/shared/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: "app-item-list",
@@ -43,13 +46,17 @@ export class ItemListComponent implements AfterViewInit {
   loading = true;
   selection = new SelectionModel<Item>(true, []);
   rentedFilters = [
-    {value: 'skipRented', viewValue: 'Pokaż tylko niewypożyczone'},
-    {value: 'skipNotRented', viewValue: 'Pokaż tylko wypożyczone'},
-    {value: '', viewValue: 'Pokaż wszystkie'}
+    { value: "skipRented", viewValue: "Pokaż tylko niewypożyczone" },
+    { value: "skipNotRented", viewValue: "Pokaż tylko wypożyczone" },
+    { value: "", viewValue: "Pokaż wszystkie" }
   ];
 
-
-  constructor(private itemService: ItemService, private router: Router) {
+  constructor(
+    private itemService: ItemService,
+    private router: Router,
+    private dialog: MatDialog,
+    private toastr: ToastrService
+  ) {
     this.selection.isSelected = this.isChecked.bind(this);
     this.selection.toggle = this.toggle.bind(this);
   }
@@ -124,9 +131,44 @@ export class ItemListComponent implements AfterViewInit {
 
   changeRentedFilter(value: string) {
     this.rentedFilters.forEach(element => {
-        this.params.delete(element.value);
+      this.params.delete(element.value);
     });
     this.params.set(value, "true");
     this.paginator.page.emit();
+  }
+
+  exportSelected(event) {
+    console.log("Selected items: " + this.selection.selected);
+  }
+
+  checkIfAllSelectedAreNotRented() {
+    const array = this.selection.selected.filter(item => item.rented === true);
+    return array.length > 0;
+  }
+
+  rentSelected(event) {
+    console.log("Selected items: " + this.selection.selected);
+    this.router.navigate(["/rentals/add"], {
+      state: this.selection.selected.length > 0 ? this.selection.selected : null
+    });
+  }
+
+  openDeleteConfirmationDialog(item: Item) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: "350px",
+      data:
+        "Czy na pewno chcesz usunąć przedmiot o kodzie: " +
+        item.inventoryCode +
+        "?"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.itemService.remove(item.id).subscribe(resp => {
+          this.toastr.success("Pomyślnie usunięto przedmiot");
+          this.paginator.page.emit();
+        });
+      }
+    });
   }
 }

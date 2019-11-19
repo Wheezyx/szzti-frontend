@@ -1,13 +1,15 @@
+import { ToastrService } from 'ngx-toastr';
 import { AfterViewInit, ViewChild } from "@angular/core";
 import { Component, OnInit, Input } from "@angular/core";
 import { merge, of as observableOf } from "rxjs";
-import { MatPaginator, MatTableDataSource } from "@angular/material";
+import { MatPaginator, MatTableDataSource, MatDialog } from "@angular/material";
 import { startWith, switchMap, map, catchError } from "rxjs/operators";
 import { Pageable } from "@app/_models/pageable";
 import { RentalService } from "@app/_services/rental.service";
 import { Rental } from "@app/_models/rental";
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
+import { ConfirmationDialogComponent } from '@app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: "app-rental-list-child",
@@ -29,7 +31,7 @@ export class RentalListChildComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  constructor(private rentalService: RentalService, private router: Router) {}
+  constructor(private rentalService: RentalService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) {}
 
   ngOnInit() {
     this.params = new Map<String, String>();
@@ -105,6 +107,21 @@ export class RentalListChildComponent implements AfterViewInit, OnInit {
     handleViewItem(id: String) {
       this.router.navigate(["items/view/", id]);
     }
+
+    openDeleteConfirmationDialog(rental: Rental) {
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        width: '350px',
+        data: "Czy na pewno chcesz odpisać przedmiot?"
+      });
   
+      dialogRef.afterClosed().subscribe(result => {
+        if(result) {
+          this.rentalService.remove(rental.id).subscribe(resp => {
+            this.toastr.success("Pomyślnie odpisano przedmiot");
+            this.paginator.page.emit();
+          })
+        }
+      });
+    }
 
 }

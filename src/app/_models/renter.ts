@@ -1,5 +1,6 @@
 export class Renter {
-    name: String;
-    surname: String;
-    code: String;
+    id: string;
+    name: string;
+    surname: string;
+    code: string;
 }

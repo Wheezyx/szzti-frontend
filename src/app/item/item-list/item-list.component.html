@@ -72,6 +72,9 @@
           <button mat-icon-button (click)="handleView(item?.id)">
             <mat-icon aria-label="View">visibility</mat-icon>
           </button>
+          <button mat-icon-button (click)="openDeleteConfirmationDialog(item)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
         </mat-cell>
       </ng-container>
 
@@ -86,6 +89,6 @@
   ></mat-paginator>
 </div>
 <div class="button-row">
-  <button (onClick)="exportSelected($evnet)" mat-raised-button color="primary">Eksportuj zaznaczone</button>
-  <button mat-raised-button color="primary">Wypożycz zaznaczone</button>
+  <button (click)="exportSelected($evnet)" mat-raised-button color="primary">Eksportuj zaznaczone</button>
+  <button (click)="rentSelected($event)"mat-raised-button [disabled]="checkIfAllSelectedAreNotRented() || selection.selected.length === 0" color="primary">Wypożycz zaznaczone</button>
 </div>

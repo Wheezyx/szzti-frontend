@@ -1,12 +1,13 @@
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Place } from '@app/_models/place';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { fromEvent, merge, of as observableOf } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Pageable } from '@app/_models/pageable';
 import { PlaceService } from '@app/_services/place.service';
 import { Router } from '@angular/router';
+import { ConfirmationDialogComponent } from '@app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-place-list',
@@ -24,7 +25,7 @@ export class PlaceListComponent implements AfterViewInit {
   loading: boolean = true;
   resultsLength: any = 0;
 
-  constructor(private placeService: PlaceService, private router: Router) { }
+  constructor(private placeService: PlaceService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngAfterViewInit() {
     fromEvent(this.nameFilter.nativeElement, "keyup")
@@ -69,5 +70,22 @@ export class PlaceListComponent implements AfterViewInit {
   handleView(id: String) {
     console.log(id);
     this.router.navigate(['places/view/', id]);
+  }
+
+  openDeleteConfirmationDialog(place: Place) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: "Czy na pewno chcesz usunąć miejsce: " + place.name + "? Wszystkie wypożyczone tutaj przedmioty zostaną odpisane."
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.placeService.remove(place.id).subscribe(resp => {
+          this.toastr.success("Pomyślnie usunięto miejsce");
+          this.paginator.page.emit();
+        })
+      }
+    });
+
   }
 }

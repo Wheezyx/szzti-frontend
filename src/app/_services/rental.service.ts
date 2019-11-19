@@ -5,12 +5,13 @@ import { environment } from '@environments/environment';
 import { Pageable } from '@app/_models/pageable';
 import { Page } from '@app/_models/page';
 import { Rental } from '@app/_models/rental';
+import { RentalSave } from '@app/_models/rental-save';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentalService {
-
   private rentalsUrl = environment.apiUrl + "/rentals";
 
   constructor(private http: HttpClient) { }
@@ -26,6 +27,15 @@ export class RentalService {
       pageable.pageSize;
     return this.http.get<Page<Rental>>(requestUrl, {params: params});
   }
+
+  saveWithMutipleItems(rental: RentalSave) {
+    return this.http.post<void>(this.rentalsUrl, rental).pipe(first());
+  }
+
+  remove(id: string): Observable<void> {
+    return this.http.delete<void>(this.rentalsUrl + "/" + id);
+  }
+
 
   private prepareParams(filterParams: Map<String, String>): HttpParams {
     let params = new HttpParams();

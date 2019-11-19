@@ -29,6 +29,10 @@ export class PlaceService {
     return this.http.get<Place>(this.placesUrl + "/" + id);
   }
 
+  remove(id: string): Observable<void> {
+    return this.http.delete<void>(this.placesUrl + "/" + id)
+  }
+
 private prepareParams(filterParams: Map<String, String>): HttpParams {
   let params = new HttpParams();
   filterParams.forEach((value, key) => {

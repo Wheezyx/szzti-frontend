@@ -37,6 +37,10 @@ export class ItemService {
     return this.http.get<Item>(this.itemsUrl + "/" + id);
   }
 
+  remove(id: string): Observable<void> {
+    return this.http.delete<void>(this.itemsUrl + "/" + id);
+  }
+
   private prepareParams(filterParams: Map<String, String>): HttpParams {
     let params = new HttpParams();
     filterParams.forEach((value, key) => {

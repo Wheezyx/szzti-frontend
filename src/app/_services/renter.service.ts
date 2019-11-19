@@ -37,6 +37,10 @@ export class RenterService {
     return this.http.post<Renter>(this.rentersUrl, renter).pipe(first());
   }
 
+  remove(id: string): Observable<void> {
+    return this.http.delete<void>(this.rentersUrl + "/" + id);
+  }
+
   private prepareParams(filterParams: Map<String, String>): HttpParams {
     let params = new HttpParams();
 

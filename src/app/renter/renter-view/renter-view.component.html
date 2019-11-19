@@ -9,4 +9,5 @@
     <mat-card-content>
       <app-rental-list-child [renterId]="renter.id"></app-rental-list-child>
     </mat-card-content>
+    <button (click)="rentSelected($event)"mat-raised-button color="primary">Generuj protokół przekazania</button>
   </mat-card>

@@ -1,0 +1,99 @@
+<div *ngIf="itemsToRent == null; else rentalPanel">
+  Nie wybrano przedmiotów do wypożyczenia. Wróć na stronę z przedmiotami i
+  wybierz przynajmniej jeden.
+  <button mat-raised-button color="primary" [routerLink]="['/items']">
+    Strona z przedmiotami
+  </button>
+</div>
+
+<ng-template #rentalPanel>
+  <mat-vertical-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <ng-template matStepLabel>Wybierz miejsce wypożyczenia</ng-template>
+      <mat-form-field>
+        <input
+          type="text"
+          placeholder="Wybierz jeden"
+          aria-label="Place"
+          matInput
+          [formControl]="placeControl"
+          [matAutocomplete]="auto2"
+        />
+        <mat-autocomplete
+          #auto2="matAutocomplete"
+          [displayWith]="displayPlaceName"
+        >
+          <mat-option
+            *ngFor="let place of filteredPlaces | async"
+            [value]="place"
+          >
+            {{ place.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext [disabled]="placeControl.errors">
+          Dalej
+        </button>
+      </div>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <ng-template matStepLabel>Wybierz osobę wypożyczającą</ng-template>
+      <mat-form-field>
+        <input
+          type="text"
+          placeholder="Wybierz jeden"
+          aria-label="Renter"
+          matInput
+          [formControl]="renterControl"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayRenterCode"
+        >
+          <mat-option
+            *ngFor="let renter of filteredRenters | async"
+            [value]="renter"
+          >
+            {{ renter.code }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <button mat-button matStepperPrevious>
+        Wstecz
+      </button>
+      <div>
+        <button mat-button matStepperNext [disabled]="renterControl.errors">
+          Dalej
+        </button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Podsumowanie</ng-template>
+      Lista przedmiotów:
+      <mat-list>
+        <mat-list-item *ngFor="let item of itemsToRent">
+          <p matLine>{{ item.inventoryCode }} - {{ item.fullItemName }}</p>
+        </mat-list-item>
+      </mat-list>
+      W sumie: {{ itemsToRent.length }}
+      <div *ngIf="placeControl.value != null">
+        {{ placeControl.value.name }}
+      </div>
+      <div *ngIf="renterControl.value != null">
+        {{ renterControl.value.code }}
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Cofnij</button>
+        <button
+          mat-button
+          [disabled]="placeControl.value == null && renterControl.value == null"
+          (click)="confirmRental()"
+        >
+          Zapisz
+        </button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</ng-template>

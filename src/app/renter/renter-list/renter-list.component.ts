@@ -2,10 +2,12 @@ import { RenterService } from './../../_services/renter.service';
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Renter } from '@app/_models/renter';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { fromEvent, merge, of as observableOf } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, startWith, switchMap, catchError, map } from 'rxjs/operators';
 import { Pageable } from '@app/_models/pageable';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationDialogComponent } from '@app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-renter-list',
@@ -26,7 +28,7 @@ export class RenterListComponent implements AfterViewInit {
   loading = true;
   resultsLength = 0;
 
-  constructor(private renterService: RenterService, private router: Router) { }
+  constructor(private renterService: RenterService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngAfterViewInit() {
     fromEvent(this.codeFilter.nativeElement, "keyup")
@@ -69,6 +71,22 @@ export class RenterListComponent implements AfterViewInit {
   handleView(id: String) {
     console.log(id);
     this.router.navigate(['renters/view/', id]);
+  }
+
+  openDeleteConfirmationDialog(renter: Renter) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: "Czy na pewno chcesz usunąć osobę o kodzie: " + renter.code + "? Wszystkie wypożyczone jemu przedmioty zostaną odpisane."
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.renterService.remove(renter.id).subscribe(resp => {
+          this.toastr.success("Pomyślnie usunięto osobę");
+          this.paginator.page.emit();
+        })
+      }
+    });
   }
 
 }

@@ -23,6 +23,8 @@ import { RenterListComponent } from './renter/renter-list/renter-list.component'
 import { RenterViewComponent } from './renter/renter-view/renter-view.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
 import { RenterAddComponent } from './renter/renter-add/renter-add.component';
+import { RentalAddComponent } from './rental/rental-add/rental-add.component';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { RenterAddComponent } from './renter/renter-add/renter-add.component';
     RenterViewComponent,
     ItemViewComponent,
     RenterAddComponent,
+    RentalAddComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +59,7 @@ import { RenterAddComponent } from './renter/renter-add/renter-add.component';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
+  entryComponents: [ConfirmationDialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

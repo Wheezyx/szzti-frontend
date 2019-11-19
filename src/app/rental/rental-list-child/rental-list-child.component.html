@@ -61,6 +61,9 @@
           <button *ngIf="rental.renter" mat-icon-button (click)="handleViewRenter(rental.renter?.id)">
             <mat-icon aria-label="View">visibility</mat-icon>
           </button>
+          <button mat-icon-button (click)="openDeleteConfirmationDialog(rental)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
         </td>
       </ng-container>
 

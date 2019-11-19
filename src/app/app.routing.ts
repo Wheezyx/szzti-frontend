@@ -1,3 +1,4 @@
+import { RentalAddComponent } from './rental/rental-add/rental-add.component';
 import { RenterAddComponent } from './renter/renter-add/renter-add.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
 import { RenterViewComponent } from './renter/renter-view/renter-view.component';
@@ -61,6 +62,10 @@ const routes: Routes = [
   {
     path: "renters/add",
     component: RenterAddComponent
+  },
+  {
+    path: "rentals/add",
+    component: RentalAddComponent
   },
   //TODO Change to 404 error page
   { path: "**", redirectTo: "" }
