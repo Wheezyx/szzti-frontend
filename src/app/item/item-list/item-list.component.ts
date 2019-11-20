@@ -20,6 +20,7 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { MatDialog } from "@angular/material";
 import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "@app/shared/confirmation-dialog/confirmation-dialog.component";
+import { AuthenticationService } from '@app/_services/authentication.service';
 
 @Component({
   selector: "app-item-list",
@@ -55,7 +56,8 @@ export class ItemListComponent implements AfterViewInit {
     private itemService: ItemService,
     private router: Router,
     private dialog: MatDialog,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authenticationService: AuthenticationService
   ) {
     this.selection.isSelected = this.isChecked.bind(this);
     this.selection.toggle = this.toggle.bind(this);
@@ -138,7 +140,18 @@ export class ItemListComponent implements AfterViewInit {
   }
 
   exportSelected(event) {
-    console.log("Selected items: " + this.selection.selected);
+    const ids = this.selection.selected.map(item => item.id);
+    if (ids.length === 0) {
+      this.toastr.error("Nie wybrałeś żadnych przedmiotów do wyeksportowania");
+    }
+    this.itemService.exportToCsv(ids).subscribe(response => {
+      let blob = new Blob(["\ufeff", response], { type: "text/csv"});
+      let url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'test.csv';
+      link.click();
+    });
   }
 
   checkIfAllSelectedAreNotRented() {

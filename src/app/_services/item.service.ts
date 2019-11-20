@@ -41,6 +41,10 @@ export class ItemService {
     return this.http.delete<void>(this.itemsUrl + "/" + id);
   }
 
+  exportToCsv(ids: Array<string>) {
+    return this.http.post(this.itemsUrl + '/export', ids, {params: {"format" : "csv"}, responseType: 'text'});
+  }
+
   private prepareParams(filterParams: Map<String, String>): HttpParams {
     let params = new HttpParams();
     filterParams.forEach((value, key) => {

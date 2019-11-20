@@ -1,4 +1,4 @@
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from "ngx-toastr";
 import { AfterViewInit, ViewChild } from "@angular/core";
 import { Component, OnInit, Input } from "@angular/core";
 import { merge, of as observableOf } from "rxjs";
@@ -7,9 +7,10 @@ import { startWith, switchMap, map, catchError } from "rxjs/operators";
 import { Pageable } from "@app/_models/pageable";
 import { RentalService } from "@app/_services/rental.service";
 import { Rental } from "@app/_models/rental";
-import { SelectionModel } from '@angular/cdk/collections';
-import { Router } from '@angular/router';
-import { ConfirmationDialogComponent } from '@app/shared/confirmation-dialog/confirmation-dialog.component';
+import { SelectionModel } from "@angular/cdk/collections";
+import { Router } from "@angular/router";
+import { ConfirmationDialogComponent } from "@app/shared/confirmation-dialog/confirmation-dialog.component";
+import { AuthenticationService } from '@app/_services/authentication.service';
 
 @Component({
   selector: "app-rental-list-child",
@@ -31,7 +32,13 @@ export class RentalListChildComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  constructor(private rentalService: RentalService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) {}
+  constructor(
+    private rentalService: RentalService,
+    private router: Router,
+    private dialog: MatDialog,
+    private toastr: ToastrService,
+    private authenticationService: AuthenticationService
+  ) {}
 
   ngOnInit() {
     this.params = new Map<String, String>();
@@ -66,62 +73,79 @@ export class RentalListChildComponent implements AfterViewInit, OnInit {
           return observableOf([]);
         })
       )
-      .subscribe(data => {this.dataSource.data = data;});
+      .subscribe(data => {
+        this.dataSource.data = data;
+      });
   }
-    isAllSelected() {
-      const numSelected = this.selection.selected.length;
-      const numRows = this.dataSource.data.length;
-      return numSelected === numRows;
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  checkboxLabel(rental?: Rental): string {
+    if (!rental) {
+      return `${this.isAllSelected() ? "select" : "deselect"} all`;
     }
-  
-    masterToggle() {
-      this.isAllSelected() ?
-          this.selection.clear() :
-          this.dataSource.data.forEach(row => this.selection.select(row));
+    return `${
+      this.selection.isSelected(rental) ? "deselect" : "select"
+    } row ${rental}`;
+  }
+
+  isChecked(row: any): boolean {
+    const found = this.selection.selected.find(
+      el => el.item.id === row.item.id
+    );
+    return found != null;
+  }
+
+  toggle(row: any) {
+    console.log("PRZED:" + this.selection.selected.length);
+    const found = this.selection.selected.find(
+      el => el.item.id === row.item.id
+    );
+    if (!found) {
+      this.selection.select(row);
+    } else {
+      const index = this.selection.selected.find(
+        el => el.item.id === row.item.id
+      );
+      this.selection.deselect(index);
     }
-  
-    checkboxLabel(rental?: Rental): string {
-      if (!rental) {
-        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    console.log("PO:" + this.selection.selected.length);
+  }
+
+  handleViewItem(id: String) {
+    this.router.navigate(["items/view/", id]);
+  }
+
+  openDeleteConfirmationDialog(rental: Rental) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: "350px",
+      data: "Czy na pewno chcesz odpisać przedmiot?"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.rentalService.remove(rental.id).subscribe(resp => {
+          this.toastr.success("Pomyślnie odpisano przedmiot");
+          this.paginator.page.emit();
+        });
       }
-      return `${this.selection.isSelected(rental) ? 'deselect' : 'select'} row ${rental}`;
-    }
+    });
+  }
 
-    isChecked(row:any): boolean {
-      const found = this.selection.selected.find(el => el.item.id === row.item.id);
-      return found != null;
-    }
+  generatePlaceRaport(event) {
+    console.log(this.selection.selected);
+  }
 
-    toggle(row: any) {
-      console.log('PRZED:' + this.selection.selected.length);
-      const found = this.selection.selected.find(el => el.item.id === row.item.id);
-      if (!found) {
-        this.selection.select(row);
-      } else {
-        const index = this.selection.selected.find(el => el.item.id === row.item.id);
-        this.selection.deselect(index);
-      }
-      console.log('PO:' + this.selection.selected.length);
-    }
-
-    handleViewItem(id: String) {
-      this.router.navigate(["items/view/", id]);
-    }
-
-    openDeleteConfirmationDialog(rental: Rental) {
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        width: '350px',
-        data: "Czy na pewno chcesz odpisać przedmiot?"
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if(result) {
-          this.rentalService.remove(rental.id).subscribe(resp => {
-            this.toastr.success("Pomyślnie odpisano przedmiot");
-            this.paginator.page.emit();
-          })
-        }
-      });
-    }
-
+  generateRenterRaport(event) {
+    console.log(this.selection.selected);
+  }
 }

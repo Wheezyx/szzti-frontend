@@ -45,7 +45,7 @@
       <button mat-icon-button (click)="handleView(renter?.id)">
         <mat-icon aria-label="View">visibility</mat-icon>
       </button>
-      <button mat-icon-button (click)="openDeleteConfirmationDialog(renter)">
+      <button mat-icon-button *ngIf="authenticationService.isAdmin()" (click)="openDeleteConfirmationDialog(renter)">
         <mat-icon aria-label="Delete">delete</mat-icon>
       </button>
     </mat-cell>

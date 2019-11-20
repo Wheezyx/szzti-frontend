@@ -19,7 +19,6 @@ const routes: Routes = [
   {
     path: "",
     component: HomeComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: "secured",
@@ -29,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: "items",
-    component: ItemListComponent
+    component: ItemListComponent,
   },
   {
     path: "login",
@@ -37,7 +36,10 @@ const routes: Routes = [
   },
   {
     path: "items/add",
-    component: ItemAddComponent
+    component: ItemAddComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] }
+    
   },
   {
     path: "places",
@@ -61,11 +63,15 @@ const routes: Routes = [
   },
   {
     path: "renters/add",
-    component: RenterAddComponent
+    component: RenterAddComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] }
   },
   {
     path: "rentals/add",
-    component: RentalAddComponent
+    component: RentalAddComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] }
   },
   //TODO Change to 404 error page
   { path: "**", redirectTo: "" }

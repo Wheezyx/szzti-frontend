@@ -8,6 +8,7 @@ import { debounceTime, distinctUntilChanged, tap, startWith, switchMap, catchErr
 import { Pageable } from '@app/_models/pageable';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from '@app/shared/confirmation-dialog/confirmation-dialog.component';
+import { AuthenticationService } from '@app/_services/authentication.service';
 
 @Component({
   selector: 'app-renter-list',
@@ -28,7 +29,7 @@ export class RenterListComponent implements AfterViewInit {
   loading = true;
   resultsLength = 0;
 
-  constructor(private renterService: RenterService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
+  constructor(private renterService: RenterService, private router: Router, private dialog: MatDialog, private toastr: ToastrService, private authenticationService: AuthenticationService) { }
 
   ngAfterViewInit() {
     fromEvent(this.codeFilter.nativeElement, "keyup")

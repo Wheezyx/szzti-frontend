@@ -88,7 +88,7 @@
         <button mat-button matStepperPrevious>Cofnij</button>
         <button
           mat-button
-          [disabled]="placeControl.value == null && renterControl.value == null"
+          [disabled]="(placeControl.value == null && renterControl.value == null)"
           (click)="confirmRental()"
         >
           Zapisz

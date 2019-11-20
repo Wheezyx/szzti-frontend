@@ -61,7 +61,7 @@
           <button *ngIf="rental.renter" mat-icon-button (click)="handleViewRenter(rental.renter?.id)">
             <mat-icon aria-label="View">visibility</mat-icon>
           </button>
-          <button mat-icon-button (click)="openDeleteConfirmationDialog(rental)">
+          <button mat-icon-button *ngIf="authenticationService.isAdmin()" (click)="openDeleteConfirmationDialog(rental)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </td>
@@ -80,4 +80,8 @@
 </div>
 <div *ngIf="dataSource.data.length === 0">
   Nie znaleziono.
+</div>
+<div class="button-row">
+  <button *ngIf="placeId != null" (click)="generatePlaceRaport($evnet)" mat-raised-button color="primary">Generuj raport dla pomieszczenia</button>
+  <button *ngIf="renterId != null" (click)="generateRenterRaport($event)"mat-raised-button color="primary">Generuj raport dla osoby</button>
 </div>

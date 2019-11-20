@@ -66,6 +66,10 @@ export class RentalAddComponent implements OnInit {
         })
       )
       .subscribe(renters => {
+        const renter = new Renter();
+        renter.code = "Brak";
+        renters.push(renter);
+
         this.renters = renters;
 
         this.renterControl.validator = Validators.compose([
@@ -93,6 +97,10 @@ export class RentalAddComponent implements OnInit {
         })
       )
       .subscribe(places => {
+        const place = new Place();
+        place.name = "Brak";
+        places.push(place);
+
         this.places = places;
         this.filteredPlaces = this.placeControl.valueChanges.pipe(
           startWith(""),
@@ -135,8 +143,14 @@ export class RentalAddComponent implements OnInit {
   confirmRental() {
     let rental = new RentalSave();
     rental.items = this.itemsToRent;
-    rental.place = this.placeControl.value;
-    rental.renter = this.renterControl.value;
+    rental.place = this.placeControl.value.name === 'Brak' ? null : this.placeControl.value;
+    rental.renter = this.renterControl.value.code === 'Brak' ? null : this.renterControl.value;
+
+    if (rental.renter === null && rental.place === null) {
+      this.toastr.warning("Brak wypożyczającego oraz miejsca, wybierz przynajmniej jedną.");
+      return;
+    }
+
     this.rentalService
       .saveWithMutipleItems(rental)
       .pipe(first())
