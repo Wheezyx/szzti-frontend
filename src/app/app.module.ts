@@ -22,9 +22,9 @@ import { RentalListChildComponent } from './rental/rental-list-child/rental-list
 import { RenterListComponent } from './renter/renter-list/renter-list.component';
 import { RenterViewComponent } from './renter/renter-view/renter-view.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
-import { RenterAddComponent } from './renter/renter-add/renter-add.component';
 import { RentalAddComponent } from './rental/rental-add/rental-add.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { RenterFormComponent } from './renter/renter-form/renter-form.component';
 
 @NgModule({
   declarations: [
@@ -41,9 +41,9 @@ import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confir
     RenterListComponent,
     RenterViewComponent,
     ItemViewComponent,
-    RenterAddComponent,
     RentalAddComponent,
     ConfirmationDialogComponent,
+    RenterFormComponent,
   ],
   imports: [
     BrowserModule,

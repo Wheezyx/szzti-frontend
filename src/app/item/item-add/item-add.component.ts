@@ -2,9 +2,11 @@ import { ToastrService } from "ngx-toastr";
 import { ItemType } from "../../_models/item-type";
 import { InsideType } from "../../_models/inside-type";
 import { ItemService } from "../../_services/item.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
+import { forkJoin } from 'rxjs';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: "app-item-add",
@@ -18,6 +20,8 @@ export class ItemAddComponent implements OnInit {
   keys = Object.keys;
   insideTypeEnum = InsideType;
   itemTypeEnum = ItemType;
+
+  @ViewChild('dateInput', {read: MatInput, static: false}) dateInput: MatInput;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,6 +40,7 @@ export class ItemAddComponent implements OnInit {
       inventoryCode: ["", Validators.required],
       itemType: ["", Validators.required],
       placeOfPosting: ["", Validators.required],
+      itemsToAdd: [1, Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])]
     });
   }
 
@@ -50,16 +55,25 @@ export class ItemAddComponent implements OnInit {
       this.submitted = false;
       return;
     }
+
+    const itemsToAdd = this.addItemForm.value.itemsToAdd;
     this.loading = true;
-    this.itemService
-      .save(this.addItemForm.value)
-      .pipe(first())
-      .subscribe(item => {
-        this.toastr.success("Pomyślnie zapisano przedmiot.");
-        this.addItemForm.reset();
-      });
-    this.submitted = false;
-    this.loading = false;
+
+    const calls = [];
+    for(var i=0; i<itemsToAdd; i++) {
+      calls.push(this.itemService
+        .save(this.addItemForm.value));
+    }
+
+    forkJoin(calls).pipe(first())
+    .subscribe(response => {
+      this.toastr.success("Pomyślnie zapisano przedmiot.");
+      this.addItemForm.reset();
+      this.addItemForm.clearValidators();
+      this.dateInput.value = '';
+      this.submitted = false;
+      this.loading = false;
+    });
   }
 
   date(event) {

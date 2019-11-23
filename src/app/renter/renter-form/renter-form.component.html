@@ -1,7 +1,9 @@
 <div class="col-md-6 offset-md-3 mt-5">
+    <p *ngIf="editStatus">Edytuj wypożyczającego</p>
+    <p *ngIf="!editStatus">Dodaj nowego wypożyczającego</p>
     <div class="card">
       <div class="card-body">
-        <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="renterForm" (ngSubmit)="onSubmit()">
           <mat-form-field>
             <input
               type="text"

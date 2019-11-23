@@ -41,6 +41,10 @@ export class RenterService {
     return this.http.delete<void>(this.rentersUrl + "/" + id);
   }
 
+  update(id: string, renter: Renter): Observable<Renter> {
+    return this.http.put<Renter>(this.rentersUrl + "/" + id, renter).pipe(first());
+  }
+
   private prepareParams(filterParams: Map<String, String>): HttpParams {
     let params = new HttpParams();
 

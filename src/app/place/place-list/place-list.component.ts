@@ -45,7 +45,7 @@ export class PlaceListComponent implements AfterViewInit {
     private router: Router,
     private dialog: MatDialog,
     private toastr: ToastrService,
-    private authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService
   ) {}
 
   ngAfterViewInit() {

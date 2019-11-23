@@ -57,7 +57,7 @@ export class ItemListComponent implements AfterViewInit {
     private router: Router,
     private dialog: MatDialog,
     private toastr: ToastrService,
-    private authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService
   ) {
     this.selection.isSelected = this.isChecked.bind(this);
     this.selection.toggle = this.toggle.bind(this);
@@ -135,6 +135,7 @@ export class ItemListComponent implements AfterViewInit {
     this.rentedFilters.forEach(element => {
       this.params.delete(element.value);
     });
+    this.paginator.pageIndex = 0;
     this.params.set(value, "true");
     this.paginator.page.emit();
   }

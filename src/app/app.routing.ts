@@ -1,5 +1,5 @@
+import { RenterFormComponent } from './renter/renter-form/renter-form.component';
 import { RentalAddComponent } from './rental/rental-add/rental-add.component';
-import { RenterAddComponent } from './renter/renter-add/renter-add.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
 import { RenterViewComponent } from './renter/renter-view/renter-view.component';
 import { RenterListComponent } from './renter/renter-list/renter-list.component';
@@ -62,10 +62,12 @@ const routes: Routes = [
     component:  ItemViewComponent
   },
   {
+    path: "renters/edit/:id",
+    component: RenterFormComponent
+  },
+  {
     path: "renters/add",
-    component: RenterAddComponent,
-    canActivate: [AuthGuard],
-    data: { roles: [Role.Admin] }
+    component: RenterFormComponent
   },
   {
     path: "rentals/add",

@@ -12,10 +12,10 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
-<div class="item-container mat-elevation-z8">
-  <div class="loading-shade" *ngIf="loading">
+<div class="loading-shade" *ngIf="loading">
     <mat-spinner *ngIf="loading"></mat-spinner>
   </div>
+<div class="item-container mat-elevation-z8">
 
   <div class="item-table-container">
     <table
@@ -93,7 +93,7 @@
   ></mat-paginator>
 </div>
 <div class="button-row">
-  <button (click)="exportSelected($evnet)" mat-raised-button color="primary">
+  <button (click)="exportSelected($event)" mat-raised-button color="primary">
     Eksportuj zaznaczone
   </button>
   <div *ngIf="authenticationService.isAdmin()">

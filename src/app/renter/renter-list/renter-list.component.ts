@@ -29,7 +29,7 @@ export class RenterListComponent implements AfterViewInit {
   loading = true;
   resultsLength = 0;
 
-  constructor(private renterService: RenterService, private router: Router, private dialog: MatDialog, private toastr: ToastrService, private authenticationService: AuthenticationService) { }
+  constructor(private renterService: RenterService, private router: Router, private dialog: MatDialog, private toastr: ToastrService, public authenticationService: AuthenticationService) { }
 
   ngAfterViewInit() {
     fromEvent(this.codeFilter.nativeElement, "keyup")

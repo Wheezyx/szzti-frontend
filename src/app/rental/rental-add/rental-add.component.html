@@ -8,7 +8,7 @@
 
 <ng-template #rentalPanel>
   <mat-vertical-stepper [linear]="true" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
+    <mat-step>
       <ng-template matStepLabel>Wybierz miejsce wypożyczenia</ng-template>
       <mat-form-field>
         <input
@@ -37,7 +37,7 @@
         </button>
       </div>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
+    <mat-step>
       <ng-template matStepLabel>Wybierz osobę wypożyczającą</ng-template>
       <mat-form-field>
         <input

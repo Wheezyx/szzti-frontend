@@ -1,4 +1,5 @@
 <div class="col-md-6 offset-md-3 mt-5">
+  <mat-spinner *ngIf="loading"></mat-spinner>
   <div class="card">
     <div class="card-body">
       <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
@@ -12,6 +13,7 @@
         </mat-form-field>
         <mat-form-field>
           <input
+            #dateInput
             matInput
             [matDatepicker]="picker"
             placeholder="Data dostarczenia"
@@ -62,9 +64,21 @@
           />
         </mat-form-field>
         <mat-form-field>
-          <textarea matInput formControlName="description" placeholder="Opis"></textarea>
+          <textarea
+            matInput
+            formControlName="description"
+            placeholder="Opis"
+          ></textarea>
         </mat-form-field>
         <mat-checkbox formControlName="equipment">Inwentarz</mat-checkbox>
+        <mat-form-field>
+          <input
+            type="number"
+            matInput
+            placeholder="Ile dodać?"
+            formControlName="itemsToAdd"
+          />
+        </mat-form-field>
         <button class="btn btn-primary">
           <span
             *ngIf="loading"

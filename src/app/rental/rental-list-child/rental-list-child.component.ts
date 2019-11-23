@@ -10,7 +10,7 @@ import { Rental } from "@app/_models/rental";
 import { SelectionModel } from "@angular/cdk/collections";
 import { Router } from "@angular/router";
 import { ConfirmationDialogComponent } from "@app/shared/confirmation-dialog/confirmation-dialog.component";
-import { AuthenticationService } from '@app/_services/authentication.service';
+import { AuthenticationService } from "@app/_services/authentication.service";
 
 @Component({
   selector: "app-rental-list-child",
@@ -37,7 +37,7 @@ export class RentalListChildComponent implements AfterViewInit, OnInit {
     private router: Router,
     private dialog: MatDialog,
     private toastr: ToastrService,
-    private authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -123,6 +123,14 @@ export class RentalListChildComponent implements AfterViewInit, OnInit {
 
   handleViewItem(id: String) {
     this.router.navigate(["items/view/", id]);
+  }
+
+  handleViewRenter(id: String) {
+    this.router.navigate(["renters/view/", id]);
+  }
+
+  handleViewPlace(id: String) {
+    this.router.navigate(["palces/view/", id]);
   }
 
   openDeleteConfirmationDialog(rental: Rental) {

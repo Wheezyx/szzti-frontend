@@ -22,7 +22,6 @@ export class RenterViewComponent implements OnInit {
 
 
   ngAfterViewInit(): void {
-    throw new Error("Method not implemented.");
   }
 
   getRenter(id: String) {
