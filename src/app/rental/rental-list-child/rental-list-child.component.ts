@@ -18,9 +18,9 @@ import { AuthenticationService } from "@app/_services/authentication.service";
   styleUrls: ["./rental-list-child.component.css"]
 })
 export class RentalListChildComponent implements AfterViewInit, OnInit {
-  @Input() placeId: String;
-  @Input() itemId: String;
-  @Input() renterId: String;
+  @Input() placeId: string;
+  @Input() itemId: string;
+  @Input() renterId: string;
 
   private params: Map<String, String>;
   loading = true;
@@ -154,6 +154,16 @@ export class RentalListChildComponent implements AfterViewInit, OnInit {
   }
 
   generateRenterRaport(event) {
-    console.log(this.selection.selected);
+    this.rentalService.generateRentalRenterReport(this.renterId).subscribe(data => {
+      let blob = new Blob([data], { type: "application/pdf"});
+      let url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'formularz-przekazania.pdf';
+      link.click();
+
+      // let url = window.URL.createObjectURL(blob);
+      // window.open(url, '_blank');
+    })
   }
 }

@@ -1,13 +1,13 @@
 import { AuthenticationService } from "./_services/authentication.service";
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { User } from "./_models/user";
-import { Role } from "./_models/role";
+import { fadeInAnimation } from './_animations/fade-in-animation';
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  styleUrls: ["./app.component.css"],
+  animations: [fadeInAnimation]
 })
 export class AppComponent {
   constructor(
@@ -27,4 +27,6 @@ export class AppComponent {
   get isLogged() {
     return this.authenticationService.isLogged();
   }
+  
+
 }

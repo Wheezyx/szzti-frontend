@@ -85,5 +85,6 @@ export class RenterFormComponent implements OnInit {
           this.router.navigate(['renters']);
         });
     }
+    this.loading = false;
   }
 }

@@ -15,6 +15,7 @@
     <strong>{{ item?.dateOfDelivery }}</strong> Miejsce zaksięgowania
     <strong>{{ item?.placeOfPosting }}</strong>
   </mat-card-content>
+  <button  (click)="generateDamageReport($event)"mat-raised-button color="primary">Generuj protokół zniszczenia sprzętu</button>
 </mat-card>
 <mat-card>
   <mat-card-content>

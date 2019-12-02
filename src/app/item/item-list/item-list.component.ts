@@ -21,6 +21,7 @@ import { MatDialog } from "@angular/material";
 import { ToastrService } from "ngx-toastr";
 import { ConfirmationDialogComponent } from "@app/shared/confirmation-dialog/confirmation-dialog.component";
 import { AuthenticationService } from '@app/_services/authentication.service';
+import { fadeInAnimation } from '@app/_animations/fade-in-animation';
 
 @Component({
   selector: "app-item-list",
@@ -144,6 +145,7 @@ export class ItemListComponent implements AfterViewInit {
     const ids = this.selection.selected.map(item => item.id);
     if (ids.length === 0) {
       this.toastr.error("Nie wybrałeś żadnych przedmiotów do wyeksportowania");
+      return;
     }
     this.itemService.exportToCsv(ids).subscribe(response => {
       let blob = new Blob(["\ufeff", response], { type: "text/csv"});

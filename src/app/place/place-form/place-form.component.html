@@ -1,0 +1,26 @@
+<div class="col-md-6 offset-md-3 mt-5">
+    <p *ngIf="editStatus">Edytuj miejsce</p>
+    <p *ngIf="!editStatus">Dodaj nowe miejsce</p>
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="name"
+              matInput
+              placeholder="Nazwa pomieszczenia"
+            />
+          </mat-form-field>
+          <button class="btn btn-primary">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Zapisz
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

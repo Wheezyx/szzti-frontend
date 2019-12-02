@@ -42,7 +42,18 @@ export class ItemService {
   }
 
   exportToCsv(ids: Array<string>) {
-    return this.http.post(this.itemsUrl + '/export', ids, {params: {"format" : "csv"}, responseType: 'text'});
+    return this.http.post(this.itemsUrl + "/export", ids, {
+      params: { format: "csv" },
+      responseType: "text"
+    });
+  }
+
+  //TODO EXPORT METHOD TO REPORT SERVICE
+  generateDamageReport(itemId: string) {
+    return this.http.post(
+      environment.apiUrl + "/report/items/ " + itemId + "/damage-report",
+      null, {responseType: 'blob'}
+    );
   }
 
   private prepareParams(filterParams: Map<String, String>): HttpParams {

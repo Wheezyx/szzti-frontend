@@ -60,4 +60,19 @@ export class ItemViewComponent implements OnInit {
     console.log(id);
     this.router.navigate(["renter/view/", id]);
   }
+
+  generateDamageReport($event) {
+    this.itemService.generateDamageReport(this.item.id).subscribe(data => {
+      let blob = new Blob([data], { type: "application/pdf"});
+      let url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'protokol-uszkodzenia-sprzetu.pdf';
+      link.click();
+
+      // let url = window.URL.createObjectURL(blob);
+      // window.open(url, '_blank');
+    })
+  }
+
 }

@@ -5,6 +5,7 @@ import { Pageable } from "@app/_models/pageable";
 import { Place } from "@app/_models/place";
 import { environment } from "@environments/environment";
 import { HttpClient, HttpParams } from "@angular/common/http";
+import { first } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -14,7 +15,10 @@ export class PlaceService {
 
   constructor(private http: HttpClient) {}
 
-  getPage(pageable: Pageable,  filterParams: Map<String, String>): Observable<Page<Place>> {
+  getPage(
+    pageable: Pageable,
+    filterParams: Map<String, String>
+  ): Observable<Page<Place>> {
     const params = this.prepareParams(filterParams);
     const requestUrl =
       this.placesUrl +
@@ -22,7 +26,7 @@ export class PlaceService {
       pageable.pageNumber +
       "&size=" +
       pageable.pageSize;
-    return this.http.get<Page<Place>>(requestUrl, {params: params});
+    return this.http.get<Page<Place>>(requestUrl, { params: params });
   }
 
   getById(id: String): Observable<Place> {
@@ -30,16 +34,26 @@ export class PlaceService {
   }
 
   remove(id: string): Observable<void> {
-    return this.http.delete<void>(this.placesUrl + "/" + id)
+    return this.http.delete<void>(this.placesUrl + "/" + id);
   }
 
-private prepareParams(filterParams: Map<String, String>): HttpParams {
-  let params = new HttpParams();
-  filterParams.forEach((value, key) => {
-    if (key && value) {
-      params = params.set(key.toString(), value.toString());
-    }
-  });
-  return params;
-}
+  save(place: Place): Observable<Place> {
+    return this.http.post<Place>(this.placesUrl, place).pipe(first());
+  }
+
+  update(placeId: string, place: Place) {
+    return this.http
+      .put<Place>(this.placesUrl + "/" + placeId, place)
+      .pipe(first());
+  }
+
+  private prepareParams(filterParams: Map<String, String>): HttpParams {
+    let params = new HttpParams();
+    filterParams.forEach((value, key) => {
+      if (key && value) {
+        params = params.set(key.toString(), value.toString());
+      }
+    });
+    return params;
+  }
 }

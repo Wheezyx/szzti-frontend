@@ -1,3 +1,4 @@
+import { PlaceFormComponent } from './place/place-form/place-form.component';
 import { RenterFormComponent } from './renter/renter-form/renter-form.component';
 import { RentalAddComponent } from './rental/rental-add/rental-add.component';
 import { ItemViewComponent } from './item/item-view/item-view.component';
@@ -68,6 +69,14 @@ const routes: Routes = [
   {
     path: "renters/add",
     component: RenterFormComponent
+  },
+  {
+    path: "places/edit/:id",
+    component: PlaceFormComponent
+  },
+  {
+    path: "places/add",
+    component: PlaceFormComponent
   },
   {
     path: "rentals/add",

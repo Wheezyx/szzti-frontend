@@ -90,4 +90,12 @@ export class RenterListComponent implements AfterViewInit {
     });
   }
 
+  handleEdit(id: string) {
+    this.router.navigate(['/renters/edit', id]);
+  }
+
+  handleAdd() {
+    this.router.navigate(['renters/add']);
+  }
+
 }

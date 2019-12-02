@@ -110,4 +110,12 @@ export class PlaceListComponent implements AfterViewInit {
       }
     });
   }
+
+  handleEdit(id: string) {
+    this.router.navigate(["/places/edit", id]);
+  }
+
+  handleAdd() {
+    this.router.navigate(["places/add"]);
+  }
 }

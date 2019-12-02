@@ -5,7 +5,9 @@
     <div class="loading-shade" *ngIf="loading">
       <mat-spinner *ngIf="loading"></mat-spinner>
     </div>
-  
+    <button mat-icon-button *ngIf="authenticationService.isAdmin()" (click)="handleAdd()">
+      <mat-icon aria-label="Add">add_circle</mat-icon>
+    </button>
     <div class="place-table-container">
       <table
         mat-table
@@ -47,6 +49,9 @@
       </button>
       <button mat-icon-button *ngIf="authenticationService.isAdmin()" (click)="openDeleteConfirmationDialog(renter)">
         <mat-icon aria-label="Delete">delete</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="authenticationService.isAdmin()" (click)="handleEdit(renter.id)">
+        <mat-icon aria-label="Edit">edit</mat-icon>
       </button>
     </mat-cell>
   </ng-container>

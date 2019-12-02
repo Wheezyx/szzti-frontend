@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { fadeInAnimation } from '@app/_animations/fade-in-animation';
 
 @Component({
   selector: 'app-secured',

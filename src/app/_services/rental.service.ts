@@ -36,6 +36,14 @@ export class RentalService {
     return this.http.delete<void>(this.rentalsUrl + "/" + id);
   }
 
+  generateRentalRenterReport(renterId: string) {
+    return this.http.post(
+      environment.apiUrl + "/report/renters/ " + renterId + "/rentals-report",
+      null, {responseType: 'blob'}
+    );
+  }
+
+
 
   private prepareParams(filterParams: Map<String, String>): HttpParams {
     let params = new HttpParams();

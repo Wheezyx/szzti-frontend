@@ -8,13 +8,12 @@
     <a class="nav-item nav-link" routerLink="/items">Lista przedmiotów</a>
     <a class="nav-item nav-link" *ngIf="isAdmin" routerLink="/items/add">Dodaj przedmiot</a>
     <a class="nav-item nav-link" routerLink="/places">Lista miejsc</a>
-    <a class="nav-item nav-link" *ngIf="isAdmin" routerLink="/places/add">Dodaj miejsce</a>
     <a class="nav-item nav-link" routerLink="/renters">Lista osób</a>
     <a class="nav-item nav-link" *ngIf="!isLogged" routerLink="/login">Zaloguj</a>
     <a class="nav-item nav-link" *ngIf="isLogged" (click)="logout()">Wyloguj</a>
   </div>
 </nav>
 SYSTEM ZARZĄDZANIA ZASOBAMI TELEINFORMATYCZNYMI
-<main>
-  <router-outlet></router-outlet>
+<main [@fadeInAnimation]="o.isActivated ? o.activatedRoute : ''">
+  <router-outlet #o="outlet"></router-outlet>
 </main>

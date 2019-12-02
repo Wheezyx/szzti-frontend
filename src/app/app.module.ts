@@ -25,6 +25,7 @@ import { ItemViewComponent } from './item/item-view/item-view.component';
 import { RentalAddComponent } from './rental/rental-add/rental-add.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { RenterFormComponent } from './renter/renter-form/renter-form.component';
+import { PlaceFormComponent } from './place/place-form/place-form.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { RenterFormComponent } from './renter/renter-form/renter-form.component'
     RentalAddComponent,
     ConfirmationDialogComponent,
     RenterFormComponent,
+    PlaceFormComponent,
   ],
   imports: [
     BrowserModule,
