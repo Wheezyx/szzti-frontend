@@ -1,6 +1,4 @@
 import { ToastrService } from "ngx-toastr";
-import { ItemType } from "../../_models/item-type";
-import { InsideType } from "../../_models/inside-type";
 import { ItemService } from "../../_services/item.service";
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
@@ -17,9 +15,6 @@ export class ItemAddComponent implements OnInit {
   addItemForm: FormGroup;
   submitted = false;
   loading = false;
-  keys = Object.keys;
-  insideTypeEnum = InsideType;
-  itemTypeEnum = ItemType;
 
   @ViewChild('dateInput', {read: MatInput, static: false}) dateInput: MatInput;
 
@@ -35,7 +30,7 @@ export class ItemAddComponent implements OnInit {
       dateOfDelivery: ['', Validators.required],
       description: ["", Validators.required],
       equipment: [false],
-      //genericName: ["", Validators.required],
+      genericName: ["", Validators.required],
       insideType: ["", Validators.required],
       inventoryCode: ["", Validators.required],
       itemType: ["", Validators.required],

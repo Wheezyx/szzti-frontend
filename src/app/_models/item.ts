@@ -1,5 +1,3 @@
-import { ItemType } from './item-type';
-import { InsideType } from './inside-type';
 export class Item {
   id: string;
   fullItemName: String;
@@ -7,9 +5,9 @@ export class Item {
   description: String;
   equipment: boolean;
   genericName: String;
-  insideType: InsideType;
+  insideType: string;
   inventoryCode: String;
-  itemType: ItemType;
+  itemType: string;
   placeOfPosting: String;
   rented: boolean;
 }

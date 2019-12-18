@@ -48,7 +48,6 @@ export class ItemService {
     });
   }
 
-  //TODO EXPORT METHOD TO REPORT SERVICE
   generateDamageReport(itemId: string) {
     return this.http.post(
       environment.apiUrl + "/report/items/ " + itemId + "/damage-report",

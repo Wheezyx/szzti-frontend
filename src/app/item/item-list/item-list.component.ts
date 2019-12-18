@@ -14,7 +14,6 @@ import {
 } from "rxjs/operators";
 import { ItemService } from "@app/_services/item.service";
 import { Pageable } from "@app/_models/pageable";
-import { ItemType } from "@app/_models/item-type";
 import { Router } from "@angular/router";
 import { SelectionModel } from "@angular/cdk/collections";
 import { MatDialog } from "@angular/material";
@@ -43,7 +42,6 @@ export class ItemListComponent implements AfterViewInit {
   ];
   data: Item[] = [];
   params: Map<String, String> = new Map();
-  itemTypeEnum = ItemType;
   resultsLength = 0;
   loading = true;
   selection = new SelectionModel<Item>(true, []);

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SecuredComponent } from './secured.component';
+import { HostFormComponent } from './host-form.component';
 
-describe('SecuredComponent', () => {
-  let component: SecuredComponent;
-  let fixture: ComponentFixture<SecuredComponent>;
+describe('HostFormComponent', () => {
+  let component: HostFormComponent;
+  let fixture: ComponentFixture<HostFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SecuredComponent ]
+      declarations: [ HostFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SecuredComponent);
+    fixture = TestBed.createComponent(HostFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

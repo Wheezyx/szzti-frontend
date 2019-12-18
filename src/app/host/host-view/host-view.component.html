@@ -1,0 +1,88 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title
+        >Nazwa hosta: <strong>{{ host?.name }}</strong></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      Numer inwenatrzowy: <strong>{{ host?.inventoryCode }}</strong> <br>
+      Pełna nazwa przedmiotu <strong>{{ item?.fullItemName }}</strong> <br> Nazwa zwyczajowa
+      <strong>{{ item?.genericName }}</strong> <br> Typ środka
+      <strong>{{ item?.insideType }}</strong> <br> Typ
+    </mat-card-content>
+  </mat-card>
+
+
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtruj po dowolnej kolumnie">
+</mat-form-field>
+<button
+mat-icon-button
+*ngIf="authenticationService.isAdmin()"
+(click)="handleAdd()"
+>
+<mat-icon aria-label="Add">add_circle</mat-icon>
+</button>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="connectionInterfaces" matSort>
+  
+      <ng-container matColumnDef="ip">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> IP </th>
+        <td mat-cell *matCellDef="let ci"> {{ci.ip}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="MAC">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> MAC </th>
+        <td mat-cell *matCellDef="let ci"> {{ci.mac}} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="socketNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer gniazda  </th>
+        <td mat-cell *matCellDef="let ci"> {{ci.socketNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="vlan">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> VLAN </th>
+        <td mat-cell *matCellDef="let ci"> {{ci.vlan}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="patchPanel">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Patch Panel </th>
+        <td mat-cell *matCellDef="let ci"> {{ci.patchPanel}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="connectionName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa przyłącza </th>
+        <td mat-cell *matCellDef="let ci"> {{ci.connectionName}} </td>
+      </ng-container>
+  
+
+      <ng-container matColumnDef="connectionNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer przyłącza </th>
+        <td mat-cell *matCellDef="let ci"> {{ci.connectionNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>
+          Akcje
+        </th>
+        <mat-cell *matCellDef="let connectionInterface">
+          <button
+            mat-icon-button
+            *ngIf="authenticationService.isAdmin()"
+            (click)="openDeleteConfirmationDialog(connectionInterface)"
+          >
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="authenticationService.isAdmin()" (click)="handleEdit(connectionInterface.id)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let ci; columns: displayedColumns;">
+      </tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+  </div>

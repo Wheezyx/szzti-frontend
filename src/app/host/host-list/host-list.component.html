@@ -1,0 +1,73 @@
+<mat-input-container>
+    <input matInput placeholder="Szukaj po nazwie hosta" #nameFilter />
+    <input matInput placeholder="Szukaj po nazwie miejsca" #placeFilter />
+    <input matInput placeholder="Szukaj po kodzie inwentarzowym" #inventoryCodeFilter />
+    <input matInput placeholder="Szukaj po adresie IP" #ipFilter />
+    <input matInput placeholder="Szukaj po adresie MAC" #macFilter />
+    <input matInput placeholder="Szukaj po patch panelu" #patchPanelFilter />
+    <input matInput placeholder="Szukaj po nazwie przyłącza" #connectionNameFilter />
+    <input matInput placeholder="Szukaj po numerze przyłącza" #connectionNumberFilter />
+  </mat-input-container>
+  <div class="host-container mat-elevation-z8">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner *ngIf="loading"></mat-spinner>
+    </div>
+    <button
+      mat-icon-button
+      *ngIf="authenticationService.isAdmin()"
+      (click)="handleAdd()"
+    >
+      <mat-icon aria-label="Add">add_circle</mat-icon>
+    </button>
+    <div class="host-table-container">
+      <table
+        mat-table
+        [dataSource]="data"
+        class="host-table"
+      >
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef disableClear>
+            Nazwa hosta
+          </th>
+          <td mat-cell *matCellDef="let host">{{ host.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="place">
+            <th mat-header-cell *matHeaderCellDef disableClear>
+              Nazwa pomieszczenia
+            </th>
+            <td mat-cell *matCellDef="let host">{{ host.place }}</td>
+          </ng-container>
+  
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            Akcje
+          </th>
+          <mat-cell *matCellDef="let host">
+            <button mat-icon-button (click)="handleView(host?.id)">
+              <mat-icon aria-label="View">visibility</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              *ngIf="authenticationService.isAdmin()"
+              (click)="openDeleteConfirmationDialog(host)"
+            >
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="authenticationService.isAdmin()" (click)="handleEdit(host.id)">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let host; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <mat-paginator
+      [length]="resultsLength"
+      [pageSize]="[10]"
+      [pageSizeOptions]="[10, 20, 100]"
+    ></mat-paginator>
+  </div>
+  

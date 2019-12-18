@@ -34,26 +34,28 @@
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Typ środka</mat-label>
-          <mat-select formControlName="insideType" required>
-            <mat-option
-              *ngFor="let insideType of keys(insideTypeEnum)"
-              [value]="insideType"
-            >
-              {{ insideType }}
-            </mat-option>
-          </mat-select>
+          <input
+            type="text"
+            formControlName="genericName"
+            matInput
+            placeholder="Nazwa zwyczajowa"
+          />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Typ przedmiotu</mat-label>
-          <mat-select formControlName="itemType" required>
-            <mat-option
-              *ngFor="let itemType of keys(itemTypeEnum)"
-              [value]="itemType"
-            >
-              {{ itemTypeEnum[itemType] }}
-            </mat-option>
-          </mat-select>
+          <input
+            type="text"
+            formControlName="insideType"
+            matInput
+            placeholder="Nazwa środka"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="text"
+            formControlName="itemType"
+            matInput
+            placeholder="Typ przedmiotu"
+          />
         </mat-form-field>
         <mat-form-field>
           <input

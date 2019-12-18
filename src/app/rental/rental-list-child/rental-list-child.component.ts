@@ -47,7 +47,6 @@ export class RentalListChildComponent implements AfterViewInit, OnInit {
     this.params.set("renterId", this.renterId);
     this.selection.isSelected = this.isChecked.bind(this);
     this.selection.toggle = this.toggle.bind(this);
-    console.log(this.params);
   }
 
   ngAfterViewInit() {

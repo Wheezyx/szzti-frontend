@@ -1,0 +1,42 @@
+<div class="col-md-6 offset-md-3 mt-5">
+    <p *ngIf="editStatus">Edytuj hosta</p>
+    <p *ngIf="!editStatus">Dodaj nowego hosta</p>
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="hostForm" (ngSubmit)="onSubmit()">
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="name"
+              matInput
+              placeholder="Nazwa hosta"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="place"
+              matInput
+              placeholder="Nazwa pomieszczenia"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="inventoryCode"
+              matInput
+              placeholder="Kod inwentarzowy"
+            />
+          </mat-form-field>
+          <button class="btn btn-primary">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Zapisz
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

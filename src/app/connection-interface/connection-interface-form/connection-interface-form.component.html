@@ -1,0 +1,83 @@
+<div *ngIf="host == null; else connectionInterfacePanel">
+    Nie wybrano hosta, dla którego przypisać interfejs. Wróć na stronę z hostami i wybierz.
+    <button mat-raised-button color="primary" [routerLink]="['/hosts']">
+      Strona z hostami
+    </button>
+  </div>
+  
+<ng-template #connectionInterfacePanel>
+<div class="col-md-6 offset-md-3 mt-5">
+    <p *ngIf="editStatus">Edytuj interfejs hosta {{host.name}}</p>
+    <p *ngIf="!editStatus">Dodaj nowy interfejs dla hosta {{host.name}}</p>
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="connectionInterfaceForm" (ngSubmit)="onSubmit()">
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="ip"
+              matInput
+              placeholder="Adres IP"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="mac"
+              matInput
+              placeholder="Adres MAC"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="vlan"
+              matInput
+              placeholder="VLAN"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="socketNumber"
+              matInput
+              placeholder="Numer gniazda"
+            />
+          </mat-form-field>
+          
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="patchPanel"
+              matInput
+              placeholder="Numer Patch panelu"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="connectionName"
+              matInput
+              placeholder="Nazwa przyłącza"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              type="text"
+              formControlName="connectionNumber"
+              matInput
+              placeholder="Numer przyłącza"
+            />
+          </mat-form-field>
+          <button class="btn btn-primary">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Zapisz
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>

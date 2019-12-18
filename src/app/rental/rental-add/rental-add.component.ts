@@ -51,7 +51,7 @@ export class RentalAddComponent implements OnInit {
     const pageable = new Pageable();
     pageable.pageNumber = 0;
     //TODO CHANGE HARDCODED VALUE
-    pageable.pageSize = 100;
+    pageable.pageSize = 1000;
 
     this.renterService
       .getPage(pageable, new Map<String, String>())
@@ -116,7 +116,6 @@ export class RentalAddComponent implements OnInit {
   }
 
   private filterPlaces(name: string): Place[] {
-    console.log(name);
     const filterValue = name.toLowerCase();
     return this.places.filter(
       option => option.name.toLowerCase().indexOf(filterValue) === 0
@@ -132,11 +131,9 @@ export class RentalAddComponent implements OnInit {
   }
 
   displayPlaceName(place?: Place): string | undefined {
-    console.log(place);
     return place ? place.name : undefined;
   }
   displayRenterCode(renter?: Renter): string | undefined {
-    console.log(renter);
     return renter ? renter.code : undefined;
   }
 
@@ -145,9 +142,9 @@ export class RentalAddComponent implements OnInit {
     rental.items = this.itemsToRent;
     rental.place = this.placeControl.value.name === 'Brak' ? null : this.placeControl.value;
     rental.renter = this.renterControl.value.code === 'Brak' ? null : this.renterControl.value;
-
+    
     if (rental.renter === null && rental.place === null) {
-      this.toastr.warning("Brak wypożyczającego oraz miejsca, wybierz przynajmniej jedną.");
+      this.toastr.warning("Brak wypożyczającego oraz miejsca, wybierz przynajmniej jednego.");
       return;
     }
 
@@ -156,6 +153,13 @@ export class RentalAddComponent implements OnInit {
       .pipe(first())
       .subscribe(item => {
         this.toastr.success("Pomyślnie dodano wypożyczenie.");
+        if (this.renterControl.value.id !== undefined) {
+          this.router.navigate(["renters/view/", this.renterControl.value.id]);
+        } 
+        else if (this.placeControl.value.id !== undefined) {
+          this.router.navigate(["places/view/", this.placeControl.value.id]);
+        }
+
       });
   }
 }

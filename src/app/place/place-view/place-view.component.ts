@@ -8,7 +8,7 @@ import { Place } from '@app/_models/place';
   templateUrl: './place-view.component.html',
   styleUrls: ['./place-view.component.css']
 })
-export class PlaceViewComponent implements OnInit, AfterViewInit {
+export class PlaceViewComponent implements OnInit {
   
   place:Place;
   private loading = true;
@@ -18,11 +18,6 @@ export class PlaceViewComponent implements OnInit, AfterViewInit {
     this.acivatedRoute.params.subscribe((params: Params) => {
       this.getPlace(params.id)
     });
-  }
-
-
-  ngAfterViewInit(): void {
-    throw new Error("Method not implemented.");
   }
 
   getPlace(id: String) {

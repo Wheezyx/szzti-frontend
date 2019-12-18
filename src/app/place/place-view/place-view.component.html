@@ -4,7 +4,7 @@
       <mat-card-subtitle>id: <strong>{{ place?.id }}</strong></mat-card-subtitle>
     </mat-card-header>
     <p>Lista przedmiotów przypisanych do tej sali:</p>
-    <mat-card-content>
+    <mat-card-content *ngIf="place != null">
       <app-rental-list-child [placeId]="place.id"></app-rental-list-child>
     </mat-card-content>
   </mat-card>

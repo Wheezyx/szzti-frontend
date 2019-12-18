@@ -6,7 +6,7 @@
       <p>Nazwisko: <strong>{{renter?.surname }}</strong></p>
     </mat-card-header>
     <p>Lista przedmiotów przypisanych do tej osoby:</p>
-    <mat-card-content>
+    <mat-card-content *ngIf="renter != null">
       <app-rental-list-child [renterId]="renter.id"></app-rental-list-child>
     </mat-card-content>
   </mat-card>

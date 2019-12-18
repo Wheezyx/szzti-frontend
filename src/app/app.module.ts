@@ -5,7 +5,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HomeComponent } from "./home/home.component";
-import { SecuredComponent } from "./secured/secured.component";
 import { LoginComponent } from "./login/login.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -26,12 +25,15 @@ import { RentalAddComponent } from './rental/rental-add/rental-add.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { RenterFormComponent } from './renter/renter-form/renter-form.component';
 import { PlaceFormComponent } from './place/place-form/place-form.component';
+import { HostListComponent } from './host/host-list/host-list.component';
+import { HostViewComponent } from './host/host-view/host-view.component';
+import { HostFormComponent } from './host/host-form/host-form.component';
+import { ConnectionInterfaceFormComponent } from './connection-interface/connection-interface-form/connection-interface-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SecuredComponent,
     LoginComponent,
     ItemListComponent,
     ItemAddComponent,
@@ -46,6 +48,10 @@ import { PlaceFormComponent } from './place/place-form/place-form.component';
     ConfirmationDialogComponent,
     RenterFormComponent,
     PlaceFormComponent,
+    HostListComponent,
+    HostViewComponent,
+    HostFormComponent,
+    ConnectionInterfaceFormComponent,
   ],
   imports: [
     BrowserModule,
